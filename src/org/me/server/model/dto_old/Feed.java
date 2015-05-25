@@ -1,17 +1,17 @@
-package org.me.server.model.dto;
+package org.me.server.model.dto_old;
 
 import java.io.Serializable;
 
 
-public class Post implements Comparable, Serializable {
-    private String id;
+public class Feed implements Comparable, Serializable {
+    private String post_id;
     private String owner;
     private String text;
     private String time;
     private Privacy privacy;
 
-    public Post(String owner, String text, String time, String id, boolean isPublic) {
-        this.id = id;
+    public Feed(String owner, String text, String time, String post_id, boolean isPublic) {
+        this.post_id = post_id;
         this.time = time;
 
         this.owner = owner;
@@ -24,8 +24,8 @@ public class Post implements Comparable, Serializable {
 
 
 
-    public String getId() {
-        return id;
+    public String getPost_id() {
+        return post_id;
     }
 
     public String getOwner() {
@@ -55,7 +55,7 @@ public class Post implements Comparable, Serializable {
 
     @Override
     public int compareTo(Object o) {
-        return this.getTime().compareTo( ((Post) o).getTime());
+        return this.getTime().compareTo(((Feed) o).getTime());
     }
 
 }

@@ -1,6 +1,6 @@
 package org.me.server.model.dao;
 
-import org.me.server.model.dto.Post;
+import org.me.server.model.dto_old.Feed;
 import org.me.server.model.Exceptions.*;
 
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ public interface UserDao {
     void signIn(String username, String password)
             throws UsernameDoesNotExistException, IncorrectPasswordException, SQLException;
 
-    void insertPost(String user, Post p)
+    void insertPost(String user, Feed p)
             throws NotSignedInException, InvalidPostIdException, SQLException;
     void deletePost(String user, String post_id)
             throws NotSignedInException, PostDoesNotExistException, SQLException;

@@ -1,7 +1,7 @@
 package org.me.server.model.Databases;
 
-import org.me.server.model.dto.Post;
-import org.me.server.model.dto.User;
+import org.me.server.model.dto_old.Feed;
+import org.me.server.model.dto_old.User;
 
 import java.io.*;
 import java.util.*;
@@ -14,7 +14,7 @@ public class FileDatabase extends Database implements Serializable {
     private static org.me.server.model.Databases.FileDatabase instance;
 
     public Map<String, User> allUsers;
-    public Map<String, Post> allPosts;
+    public Map<String, Feed> allPosts;
 
     public Map<String, Vector<String>> followerMap;
     public Map<String, Vector<String>> postLikerMap;

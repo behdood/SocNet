@@ -2,7 +2,7 @@ package org.me.server.model.dao;
 
 import org.me.server.model.Databases.Database;
 import org.me.server.model.Exceptions.*;
-import org.me.server.model.dto.*;
+import org.me.server.model.dto_old.*;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -41,16 +41,16 @@ public class FileUserDao implements UserDao {
     }
 
     @Override
-    public void insertPost(String user, Post p)
+    public void insertPost(String user, Feed p)
             throws NotSignedInException, InvalidPostIdException {
         if (!db.allUsers.containsKey(user))
             throw new NotSignedInException();
 
-        if (db.allPosts.containsKey(p.getId()))
+        if (db.allPosts.containsKey(p.getPost_id()))
             throw new InvalidPostIdException();
 
-        db.allPosts.put(p.getId(), p);
-        db.postLikerMap.put(p.getId(), new Vector<String>());
+        db.allPosts.put(p.getPost_id(), p);
+        db.postLikerMap.put(p.getPost_id(), new Vector<String>());
     }
 
     @Override
@@ -161,9 +161,9 @@ public class FileUserDao implements UserDao {
         Vector<String> followed = db.followerMap.get(user);
         Vector<String> followedFeeds = new Vector<>();
 
-        for (Post post : db.allPosts.values()) {
-            if (followed.contains(post.getOwner()))
-                followedFeeds.add(post.toString() + db.postLikerMap.get(post.getId()).size() + " likes");
+        for (Feed feed : db.allPosts.values()) {
+            if (followed.contains(feed.getOwner()))
+                followedFeeds.add(feed.toString() + db.postLikerMap.get(feed.getPost_id()).size() + " likes");
         }
         Collections.reverse(followedFeeds);
         return followedFeeds.iterator();
@@ -178,8 +178,8 @@ public class FileUserDao implements UserDao {
         if (!db.allPosts.containsKey(post_id))
             throw new PostDoesNotExistException();
 
-//        Post post = db.allPosts.get(post_id);
-//        return db.postLikerMap.get(db.allPosts.get(post_id).getId()).iterator();
+//        Feed post = db.allPosts.get(post_id);
+//        return db.postLikerMap.get(db.allPosts.get(post_id).getPost_id()).iterator();
         Vector<String> tmp = db.postLikerMap.get(post_id);
         Collections.sort(tmp);
         return tmp.iterator();
@@ -191,9 +191,9 @@ public class FileUserDao implements UserDao {
             throw new UsernameDoesNotExistException(other);
 
         Vector<String> followedFeeds = new Vector<>();
-        for (Post post : db.allPosts.values()) {
-            if (post.getOwner().equals(other) && post.getPrivacy().equals(Privacy.PUBLIC))
-                followedFeeds.add(post.toString() + db.postLikerMap.get(post.getId()).size() + " likes");
+        for (Feed feed : db.allPosts.values()) {
+            if (feed.getOwner().equals(other) && feed.getPrivacy().equals(Privacy.PUBLIC))
+                followedFeeds.add(feed.toString() + db.postLikerMap.get(feed.getPost_id()).size() + " likes");
         }
         //TODO : return this in reverse order!
         return followedFeeds.iterator();

@@ -3,7 +3,7 @@ package org.me.server.model.bl;
 import org.me.server.model.Databases.Database;
 import org.me.server.model.Exceptions.*;
 import org.me.server.model.dao.UserDAOFactory;
-import org.me.server.model.dto.Post;
+import org.me.server.model.dto_old.Feed;
 
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -118,10 +118,10 @@ public class UserBL implements UserIX {
                                  String post_id, boolean is_public) {
         if (username.equals(""))
             return ActionResult.NOT_SIGNED_IN_ERROR;
-        Post post = new Post(username, message, time_stamp, post_id, is_public);
+        Feed feed = new Feed(username, message, time_stamp, post_id, is_public);
         try {
             org.me.server.model.dao.UserDao userDAO = UserDAOFactory.getUserDAO(db);
-            userDAO.insertPost(username, post);
+            userDAO.insertPost(username, feed);
             return ActionResult.OK;
         } catch (NotSignedInException e) {
             return ActionResult.NOT_SIGNED_IN_ERROR;

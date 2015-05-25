@@ -1,8 +1,8 @@
 package org.me.server.model.dao;
 
 import org.me.server.model.Exceptions.*;
-import org.me.server.model.dto.Post;
-import org.me.server.model.dto.Privacy;
+import org.me.server.model.dto_old.Feed;
+import org.me.server.model.dto_old.Privacy;
 
 import java.sql.*;
 import java.util.Iterator;
@@ -52,17 +52,17 @@ public class OracleXeUserDao implements UserDao {
     }
 
     @Override
-    public void insertPost(String user, Post p) throws NotSignedInException, InvalidPostIdException, SQLException {
+    public void insertPost(String user, Feed p) throws NotSignedInException, InvalidPostIdException, SQLException {
         String is_private;
         if (p.getPrivacy().equals(Privacy.PUBLIC))                is_private = "n";
         else                                                      is_private = "y";
 
         ResultSet r;
-        r = st.executeQuery("select * from " + posts_tbl + " where post_id = '" + p.getId() + "'");
+        r = st.executeQuery("select * from " + posts_tbl + " where post_id = '" + p.getPost_id() + "'");
         if (r.next())
             throw new InvalidPostIdException();
 
-        st.executeUpdate("insert into " + posts_tbl + " values ('" + p.getId() + "', '" + p.getOwner() + "', '"
+        st.executeUpdate("insert into " + posts_tbl + " values ('" + p.getPost_id() + "', '" + p.getOwner() + "', '"
         + p.getTime() + "', '" + is_private + "', '" + p.getText() + "')");
         st.close();
         con.close();

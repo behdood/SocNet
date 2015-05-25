@@ -1,23 +1,19 @@
-package org.me.server.model.dto;
+package org.me.server.model.dto_old;
+
+import java.io.Serializable;
 
 
-public class User {
-    private String userId;
+public class User implements Serializable {
+
     private String username;
     private String password;
 
-    public User(String userId, String username, String password) {
-        this.userId = userId;
+    public User() {
+    }
+
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getUsername() {
@@ -36,4 +32,3 @@ public class User {
         this.password = password;
     }
 }
-

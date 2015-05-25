@@ -2,6 +2,10 @@ package org.me.server.model.dto;
 
 
 public enum Privacy {
+    PRIVATE,
+
     PUBLIC,
-    FOLLOWERS_ONLY
+
+    FRIENDS_ONLY
+
 }
