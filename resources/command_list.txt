@@ -1,0 +1,26 @@
+*************** username should not contain white-space ********************
+
+*************** SERVER COMMAND *********************************************
+exit  (stores the data on disk and properly exit the program)
+
+*************** CLIENT COMMANDS ********************************************
+register <username> <password>
+login <username> <password>
+logout
+exit
+
+addpost <msg>
+sharepost <msg>
+deletepost <time_stamp> (post_id :  time_stamp-username )
+
+like <post_id>   
+unlike <post_id>
+
+follow <username>
+unfollow <username>
+
+getall
+getfriends
+getfeeds
+
+getlikers <post_id>
