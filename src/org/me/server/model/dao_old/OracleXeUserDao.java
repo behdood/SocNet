@@ -1,4 +1,4 @@
-package org.me.server.model.dao;
+package org.me.server.model.dao_old;
 
 import org.me.server.model.Exceptions.*;
 import org.me.server.model.dto_old.Feed;

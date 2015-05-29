@@ -1,41 +1,38 @@
 package org.me.server.model.dao;
 
-import org.me.server.model.dto_old.Feed;
-import org.me.server.model.Exceptions.*;
 
-import java.sql.SQLException;
-import java.util.Iterator;
+import org.me.server.model.Id;
+import org.me.server.model.bl.UserActionResult;
+import org.me.server.model.dto.Feed;
+import org.me.server.model.dto.Privacy;
+import org.me.server.model.dto.User;
 
+import java.util.List;
 
 public interface UserDao {
-    void signUp(String username, String password)
-            throws UsernameAlreadyExistsException, SQLException;
-    void signIn(String username, String password)
-            throws UsernameDoesNotExistException, IncorrectPasswordException, SQLException;
+    boolean createUser(String username, String password);
+    boolean deleteUser(Id userId);
+    Id signInUser(String username, String password);
+    boolean signOutUser(Id userId);
+    boolean isUserExist(Id userId);
+    Id getUserId(User user);
+    boolean isFeedExist(Id feedId);
+    Id getFeedId(Feed feed);
 
-    void insertPost(String user, Feed p)
-            throws NotSignedInException, InvalidPostIdException, SQLException;
-    void deletePost(String user, String post_id)
-            throws NotSignedInException, PostDoesNotExistException, SQLException;
+    void addFeed(Id userId, Feed feed, Privacy privacy);
+    void removeFeed(Id userId, Feed feed);
 
-    void insertLike(String user, String post_id)
-            throws NotSignedInException, PostDoesNotExistException, AlreadyLikedException, SQLException;
-    void deleteLike(String user, String post_id)
-            throws NotSignedInException, PostDoesNotExistException, NotLikedBeforeException, SQLException;
+    void likeFeed(Id userId, Feed feed);
+    void unlikeFeed(Id userId, Feed feed);
 
-    void insertFollow(String user, String other)
-            throws NotSignedInException, AlreadyFollowingException, UsernameDoesNotExistException, SQLException;
-    void deleteFollow(String user, String other)
-            throws NotFollowingException, NotSignedInException, UsernameDoesNotExistException, SQLException;
+    void followOtherUser(Id userId, Id otherUserId);
+    void unfollowOtherUser(Id userId, Id otherUserId);
 
-    Iterator<String> selectAllUsers(String user)
-            throws NotSignedInException, SQLException;
-    Iterator<String> selectFollowedUsers(String user)
-            throws NotSignedInException, SQLException;
-    Iterator<String> selectFollowedPosts(String user)
-            throws NotSignedInException, SQLException;
-    Iterator<String> selectPostLikers(String user, String post_id)
-            throws NotSignedInException, PostDoesNotExistException, SQLException;
-    Iterator<String> selectPublicPosts(String other)
-            throws UsernameDoesNotExistException, SQLException;
+    List<User> getAllUsers(Id userId);
+    List<User> getUsersFollowedByMe(Id userId);
+    List<User> getFeedLikers(Id userId, Id StatusId);
+
+    List<Feed> getAllFeeds(Id userId);
+    List<Feed> getOtherUserPublicFeeds(Id otherUserId);
+
 }

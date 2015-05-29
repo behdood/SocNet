@@ -1,9 +1,9 @@
 package org.me.server.controller;
 
 
-import org.me.server.model.bl.UserBL;
-import org.me.server.model.bl.UserIX;
-import org.me.server.model.Databases.Database;
+import org.me.server.model.bl_old.UserBL;
+import org.me.server.model.bl_old.UserIX;
+import org.me.server.model.databases.Database;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

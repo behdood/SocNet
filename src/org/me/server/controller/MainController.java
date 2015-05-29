@@ -1,7 +1,9 @@
 package org.me.server.controller;
 
 import org.me.server.SocNetProtocol;
-import org.me.server.model.Databases.Database;
+import org.me.server.model.databases.Database;
+import org.me.server.model.databases.FileDatabase;
+import org.me.server.model.databases.OracleXeDatabase;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -18,7 +20,7 @@ public class MainController {
         int portNumber = SocNetProtocol.portNo;
         Database db;
         if (USE_ORACLE_XE)
-            db = new org.me.server.model.Databases.OracleXeDatabase();
+            db = new OracleXeDatabase();
         else
             db = readDatabaseFromDisk();
 //        db = FileDatabase.getInstance();
@@ -70,7 +72,7 @@ public class MainController {
         } catch (ClassNotFoundException e) {
             System.err.println("Unable to read database from disk! Creating a new one ...");
         }
-        return org.me.server.model.Databases.FileDatabase.getInstance();
+        return FileDatabase.getInstance();
     }
 
     private static void writeDatabaseToDisk(Database database){

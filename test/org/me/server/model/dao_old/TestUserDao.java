@@ -1,4 +1,4 @@
-package org.me.server.model.bl;
+package org.me.server.model.dao_old;
 
 
 import org.junit.Test;
@@ -6,7 +6,8 @@ import org.me.server.model.Exceptions.UsernameAlreadyExistsException;
 
 import static org.junit.Assert.fail;
 
-public class TestUserBl {
+public abstract class TestUserDao {
+
     @Test
     public void registerUser() throws Exception {
         fail("not implemented yet!");
@@ -29,5 +30,4 @@ public class TestUserBl {
 
 
     }
-
 }

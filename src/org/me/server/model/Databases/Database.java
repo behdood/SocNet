@@ -1,4 +1,4 @@
-package org.me.server.model.Databases;
+package org.me.server.model.databases;
 
 
 // only used for polymorphism!

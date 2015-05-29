@@ -1,0 +1,18 @@
+package org.me.server.model.bl;
+
+
+public enum UserActionResult {
+        OK,
+        USERNAME_EXIST_ERROR,
+        USERNAME_NOT_EXIST_ERROR,
+        INCORRECT_PASSWORD_ERROR,
+        NOT_SIGNED_IN_ERROR,
+        INVALID_POST_ID_ERROR,
+        POST_DOES_NOT_EXIST_ERROR,
+        ALREADY_FOLLOWING_ERROR,
+        ALREADY_NOT_FOLLOWING_ERROR,
+        ALREADY_LIKED_ERROR,
+        ALREADY_NOT_LIKED_ERROR,
+        DATABASE_CONNECTION_ERROR,
+        UNKNOWN_ERROR
+}

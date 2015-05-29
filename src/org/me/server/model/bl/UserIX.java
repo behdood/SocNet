@@ -1,43 +1,37 @@
 package org.me.server.model.bl;
 
 
-import java.util.Iterator;
+import org.me.server.model.Id;
+import org.me.server.model.dto.Feed;
+import org.me.server.model.dto.User;
 
+import java.util.List;
 
+// implementations of this interface should store the current user
 public interface UserIX {
 
-    ActionResult register (String username, String password);
-    ActionResult login(String username, String password);
-    ActionResult logout();
+    UserActionResult register(String username, String password);
+    UserActionResult unregister();
+    UserActionResult login(String username, String password);
+    UserActionResult logout();
 
-    Iterator<String> getAllUsers (String username);
-    Iterator<String> getFollowedUsers(String username);
-    Iterator<String> getFollowedFeeds(String username);
-    Iterator<String> getPostLikers(String username, String post_id);
-    Iterator<String> getPublicFeeds(String otherUsername);
+    UserActionResult updateStatus(String statusText);
+    UserActionResult deleteStatus(Id statusId);
+    UserActionResult sharePublic(String statusText);
 
-    ActionResult sharePublic(String username, String message, String time_stamp, String post_id);
-    ActionResult updateStatus(String username, String message, String time_stamp, String post_id);
-    ActionResult deleteStatus(String username, String post_id);
+    UserActionResult likeStatus(Id statusId);
+    UserActionResult unlikeStatus(Id statusId);
 
-    ActionResult follow(String username, String otherUsername);
-    ActionResult unfollow(String username, String otherUsername);
-    ActionResult like(String username, String post_id);
-    ActionResult unlike(String username, String post_id);
+    UserActionResult followOtherUser(String otherUsername);
+    UserActionResult unfollowOtherUser(String otherUsername);
 
-    enum ActionResult {
-        OK,
-        USERNAME_EXIST_ERROR,
-        USERNAME_NOT_EXIST_ERROR,
-        INCORRECT_PASSWORD_ERROR,
-        NOT_SIGNED_IN_ERROR,
-        INVALID_POST_ID_ERROR,
-        POST_DOES_NOT_EXIST_ERROR,
-        ALREADY_FOLLOWING_ERROR,
-        ALREADY_NOT_FOLLOWING_ERROR,
-        ALREADY_LIKED_ERROR,
-        ALREADY_NOT_LIKED_ERROR,
-        DATABASE_CONNECTION_ERROR,
-        UNKNOWN_ERROR
-    }
+    List<User> getAllUsers();
+    List<User> getUsersFollowedByMe();
+    List<User> getStatusLikers(Id statusId);
+
+    List<Feed> getAllFeeds();
+    List<Feed> getOtherUserPublicFeeds();
+
+
+
 }

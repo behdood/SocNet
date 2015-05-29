@@ -1,4 +1,4 @@
-package org.me.server.model.Databases;
+package org.me.server.model.databases;
 
 import org.me.server.model.dto_old.Feed;
 import org.me.server.model.dto_old.User;
@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 
 public class FileDatabase extends Database implements Serializable {
 
-    private static org.me.server.model.Databases.FileDatabase instance;
+    private static FileDatabase instance;
 
     public Map<String, User> allUsers;
     public Map<String, Feed> allPosts;
@@ -27,9 +27,9 @@ public class FileDatabase extends Database implements Serializable {
         postLikerMap = new ConcurrentHashMap<>();
     }
 
-    static public synchronized org.me.server.model.Databases.FileDatabase getInstance() {
+    static public synchronized FileDatabase getInstance() {
         if (instance == null) {
-            instance = new org.me.server.model.Databases.FileDatabase();
+            instance = new FileDatabase();
         }
         return instance;
     }

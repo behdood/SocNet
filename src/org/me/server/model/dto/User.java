@@ -1,24 +1,26 @@
 package org.me.server.model.dto;
 
 
+import java.util.Objects;
+
 public class User {
-    private String userId;
+//    private String userId;
     private String username;
     private String password;
 
     public User(String userId, String username, String password) {
-        this.userId = userId;
+//        this.userId = userId;
         this.username = username;
         this.password = password;
     }
 
-    public String getUserId() {
-        return userId;
-    }
+//    public String getUserId() {
+//        return userId;
+//    }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+//    public void setUserId(String userId) {
+//        this.userId = userId;
+//    }
 
     public String getUsername() {
         return username;
@@ -34,6 +36,19 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(username, user.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username);
     }
 }
 

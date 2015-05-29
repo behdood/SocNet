@@ -1,4 +1,4 @@
-package org.me.server.model.dao;
+package org.me.server.model.dao_old;
 
 
 public class TestFileUserDao extends TestUserDao{

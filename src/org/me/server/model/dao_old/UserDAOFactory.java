@@ -1,6 +1,7 @@
-package org.me.server.model.dao;
+package org.me.server.model.dao_old;
 
-import org.me.server.model.Databases.Database;
+import org.me.server.model.databases.Database;
+import org.me.server.model.databases.OracleXeDatabase;
 
 import java.sql.SQLException;
 
@@ -14,7 +15,7 @@ public class UserDAOFactory {
         if (last_part.equals("FileDatabase"))
             return new FileUserDao(db);
         if (last_part.equals("OracleXeDatabase")) {
-            org.me.server.model.Databases.OracleXeDatabase xe_db = new org.me.server.model.Databases.OracleXeDatabase();
+            OracleXeDatabase xe_db = new OracleXeDatabase();
             return new OracleXeUserDao(xe_db.class_name, xe_db.connection, xe_db.username, xe_db.password);
         }
         return null;

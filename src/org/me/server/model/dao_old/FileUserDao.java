@@ -1,7 +1,8 @@
-package org.me.server.model.dao;
+package org.me.server.model.dao_old;
 
-import org.me.server.model.Databases.Database;
+import org.me.server.model.databases.Database;
 import org.me.server.model.Exceptions.*;
+import org.me.server.model.databases.FileDatabase;
 import org.me.server.model.dto_old.*;
 
 import java.util.Collections;
@@ -11,10 +12,10 @@ import java.util.Vector;
 
 public class FileUserDao implements UserDao {
 
-    private org.me.server.model.Databases.FileDatabase db;
+    private FileDatabase db;
 
     public FileUserDao(Database db) {
-        this.db = (org.me.server.model.Databases.FileDatabase) db;
+        this.db = (FileDatabase) db;
     }
 
     @Override
