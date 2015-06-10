@@ -1,7 +1,7 @@
 package org.me.server.model.dao_old;
 
-import org.me.server.model.databases.Database;
-import org.me.server.model.databases.OracleXeDatabase;
+import org.me.server.model.databases_old.Database;
+import org.me.server.model.databases_old.OracleXeDatabase;
 
 import java.sql.SQLException;
 

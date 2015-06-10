@@ -1,6 +1,6 @@
 package org.me.server.model.bl_old;
 
-import org.me.server.model.databases.Database;
+import org.me.server.model.databases_old.Database;
 import org.me.server.model.Exceptions.*;
 import org.me.server.model.dao_old.UserDAOFactory;
 import org.me.server.model.dto_old.Feed;
@@ -42,7 +42,7 @@ public class UserBL implements UserIX {
             return ActionResult.DATABASE_CONNECTION_ERROR;
         } catch (SQLException e) {
             return ActionResult.DATABASE_CONNECTION_ERROR;
-        } catch (UsernameDoesNotExistException e) {
+        } catch (UserDoesNotExistException e) {
             return ActionResult.USERNAME_NOT_EXIST_ERROR;
         } catch (IncorrectPasswordException e) {
             return ActionResult.INCORRECT_PASSWORD_ERROR;
@@ -98,7 +98,7 @@ public class UserBL implements UserIX {
         try {
             org.me.server.model.dao_old.UserDao userDAO = UserDAOFactory.getUserDAO(db);
             return  userDAO.selectPostLikers(username, post_id);
-        } catch (NotSignedInException | PostDoesNotExistException | SQLException | ClassNotFoundException e) {
+        } catch (NotSignedInException | FeedNotExistException | SQLException | ClassNotFoundException e) {
             return null;
         }
     }
@@ -108,7 +108,7 @@ public class UserBL implements UserIX {
         try {
             org.me.server.model.dao_old.UserDao userDAO = UserDAOFactory.getUserDAO(db);
             return userDAO.selectPublicPosts(otherUsername);
-        } catch (UsernameDoesNotExistException | SQLException | ClassNotFoundException e) {
+        } catch (UserDoesNotExistException | SQLException | ClassNotFoundException e) {
             return null;
         }
     }
@@ -154,7 +154,7 @@ public class UserBL implements UserIX {
             return ActionResult.OK;
         } catch (NotSignedInException e) {
             return ActionResult.NOT_SIGNED_IN_ERROR;
-        } catch (PostDoesNotExistException e) {
+        } catch (FeedNotExistException e) {
             return ActionResult.POST_DOES_NOT_EXIST_ERROR;
         } catch (ClassNotFoundException e) {
             return ActionResult.DATABASE_CONNECTION_ERROR;
@@ -176,7 +176,7 @@ public class UserBL implements UserIX {
             return ActionResult.NOT_SIGNED_IN_ERROR;
         } catch (AlreadyFollowingException e) {
             return ActionResult.ALREADY_FOLLOWING_ERROR;
-        } catch (UsernameDoesNotExistException e) {
+        } catch (UserDoesNotExistException e) {
             return ActionResult.USERNAME_NOT_EXIST_ERROR;
         } catch (ClassNotFoundException e) {
             return ActionResult.DATABASE_CONNECTION_ERROR;
@@ -195,9 +195,9 @@ public class UserBL implements UserIX {
             return ActionResult.OK;
         } catch (NotSignedInException e) {
             return ActionResult.NOT_SIGNED_IN_ERROR;
-        } catch (NotFollowingException e) {
+        } catch (NotFollowedBeforeException e) {
             return ActionResult.ALREADY_NOT_FOLLOWING_ERROR;
-        } catch (UsernameDoesNotExistException e) {
+        } catch (UserDoesNotExistException e) {
             return ActionResult.USERNAME_NOT_EXIST_ERROR;
         } catch (ClassNotFoundException e) {
             return ActionResult.DATABASE_CONNECTION_ERROR;
@@ -216,7 +216,7 @@ public class UserBL implements UserIX {
             return ActionResult.OK;
         } catch (NotSignedInException e) {
             return ActionResult.NOT_SIGNED_IN_ERROR;
-        } catch (PostDoesNotExistException e) {
+        } catch (FeedNotExistException e) {
             return ActionResult.POST_DOES_NOT_EXIST_ERROR;
         } catch (AlreadyLikedException e) {
             return ActionResult.ALREADY_LIKED_ERROR;
@@ -237,7 +237,7 @@ public class UserBL implements UserIX {
             return ActionResult.OK;
         } catch (NotSignedInException e) {
             return ActionResult.NOT_SIGNED_IN_ERROR;
-        } catch (PostDoesNotExistException e) {
+        } catch (FeedNotExistException e) {
             return ActionResult.POST_DOES_NOT_EXIST_ERROR;
         } catch (NotLikedBeforeException e) {
             return ActionResult.ALREADY_NOT_LIKED_ERROR;

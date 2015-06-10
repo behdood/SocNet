@@ -1,9 +1,9 @@
 package org.me.server.controller;
 
 import org.me.server.SocNetProtocol;
-import org.me.server.model.databases.Database;
-import org.me.server.model.databases.FileDatabase;
-import org.me.server.model.databases.OracleXeDatabase;
+import org.me.server.model.databases_old.Database;
+import org.me.server.model.databases_old.FileDatabase;
+import org.me.server.model.databases_old.OracleXeDatabase;
 
 import java.io.*;
 import java.net.InetAddress;

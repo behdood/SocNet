@@ -38,11 +38,11 @@ public class OracleXeUserDao implements UserDao {
     }
 
     @Override
-    public void signIn(String username, String password) throws UsernameDoesNotExistException, IncorrectPasswordException, SQLException {
+    public void signIn(String username, String password) throws UserDoesNotExistException, IncorrectPasswordException, SQLException {
         ResultSet r;
         r = st.executeQuery("select * from " + users_tbl + " where username = '" + username + "'");
         if (!r.next())
-            throw new UsernameDoesNotExistException();
+            throw new UserDoesNotExistException();
 
         r = st.executeQuery("select * from " + users_tbl + " where username = '" + username + "' and password = '" + password + "'");
         if (!r.next())
@@ -70,11 +70,11 @@ public class OracleXeUserDao implements UserDao {
     }
 
     @Override
-    public void deletePost(String user, String post_id) throws NotSignedInException, PostDoesNotExistException, SQLException {
+    public void deletePost(String user, String post_id) throws NotSignedInException, FeedNotExistException, SQLException {
         ResultSet r;
         r = st.executeQuery("select * from " + posts_tbl + " where post_id = '" + post_id + "'");
         if (!r.next())
-            throw new PostDoesNotExistException();
+            throw new FeedNotExistException();
 
         st.executeUpdate("delete from " + posts_tbl + " where post_id = '" + post_id + "'");
         st.close();
@@ -83,11 +83,11 @@ public class OracleXeUserDao implements UserDao {
     }
 
     @Override
-    public void insertLike(String user, String post_id) throws NotSignedInException, PostDoesNotExistException, AlreadyLikedException, SQLException {
+    public void insertLike(String user, String post_id) throws NotSignedInException, FeedNotExistException, AlreadyLikedException, SQLException {
         ResultSet r;
         r = st.executeQuery("select * from " + posts_tbl + " where post_id = '" + post_id + "'");
         if (!r.next())
-            throw new PostDoesNotExistException();
+            throw new FeedNotExistException();
 
         r = st.executeQuery("select * from " + likers_tbl + " where post_id = '" + post_id + "' and user_liker = '" + user + "'");
         if (r.next())
@@ -100,11 +100,11 @@ public class OracleXeUserDao implements UserDao {
     }
 
     @Override
-    public void deleteLike(String user, String post_id) throws NotSignedInException, PostDoesNotExistException, NotLikedBeforeException, SQLException {
+    public void deleteLike(String user, String post_id) throws NotSignedInException, FeedNotExistException, NotLikedBeforeException, SQLException {
         ResultSet r;
         r = st.executeQuery("select * from " + posts_tbl + " where post_id = '" + post_id + "'");
         if (!r.next())
-            throw new PostDoesNotExistException();
+            throw new FeedNotExistException();
 
         r = st.executeQuery("select * from " + likers_tbl + " where post_id = '" + post_id + "' and user_liker = '" + user + "'");
         if (!r.next())
@@ -117,12 +117,12 @@ public class OracleXeUserDao implements UserDao {
     }
 
     @Override
-    public void insertFollow(String user, String other) throws NotSignedInException, AlreadyFollowingException, UsernameDoesNotExistException, SQLException {
+    public void insertFollow(String user, String other) throws NotSignedInException, AlreadyFollowingException, UserDoesNotExistException, SQLException {
         ResultSet r;
 
         r = st.executeQuery("select * from " + users_tbl + " where username = '" + other + "'");
         if (!r.next())
-            throw new UsernameDoesNotExistException(other);
+            throw new UserDoesNotExistException(other);
 
         r = st.executeQuery("select * from " + followers_tbl + " where user_follower = '" + user + "' and user_followed = '" + other + "'");
         if (r.next())
@@ -136,16 +136,16 @@ public class OracleXeUserDao implements UserDao {
     }
 
     @Override
-    public void deleteFollow(String user, String other) throws NotFollowingException, NotSignedInException, UsernameDoesNotExistException, SQLException {
+    public void deleteFollow(String user, String other) throws NotFollowedBeforeException, NotSignedInException, UserDoesNotExistException, SQLException {
         ResultSet r;
 
         r = st.executeQuery("select * from " + users_tbl + " where username = '" + other + "'");
         if (!r.next())
-            throw new UsernameDoesNotExistException(other);
+            throw new UserDoesNotExistException(other);
 
         r = st.executeQuery("select * from " + followers_tbl + " where user_follower = '" + user + "' and user_followed = '" + other + "'");
         if (!r.next())
-            throw new NotFollowingException(user, other);
+            throw new NotFollowedBeforeException(user, other);
 
         st.executeUpdate("delete from " + followers_tbl + " where user_follower ='" + user + "' and user_followed = '" + other + "'");
         st.close();
@@ -203,11 +203,11 @@ public class OracleXeUserDao implements UserDao {
     }
 
     @Override
-    public Iterator<String> selectPostLikers(String user, String post_id) throws NotSignedInException, PostDoesNotExistException, SQLException {
+    public Iterator<String> selectPostLikers(String user, String post_id) throws NotSignedInException, FeedNotExistException, SQLException {
         ResultSet r;
         r = st.executeQuery("select * from " + posts_tbl + " where post_id = '" + post_id + "'");
         if (!r.next())
-            throw new PostDoesNotExistException();
+            throw new FeedNotExistException();
 
         Vector<String> tmp = new Vector<>();
         r = st.executeQuery("select * from " + likers_tbl + " where post_id = '" + post_id + "' order by user_liker");
@@ -219,11 +219,11 @@ public class OracleXeUserDao implements UserDao {
     }
 
     @Override
-    public Iterator<String> selectPublicPosts(String other) throws UsernameDoesNotExistException, SQLException {
+    public Iterator<String> selectPublicPosts(String other) throws UserDoesNotExistException, SQLException {
         ResultSet r;
         r = st.executeQuery("select * from " + users_tbl + " where username = '" + other + "'");
         if (!r.next())
-            throw new UsernameDoesNotExistException(other);
+            throw new UserDoesNotExistException(other);
 
         r = st.executeQuery("select post_id, owner, time_stamp, text from " + posts_tbl + " where owner = '" + other + "' and is_private = 'n' order by post_id desc");
         Vector<String> tmp = new Vector<>();

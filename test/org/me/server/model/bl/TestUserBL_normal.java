@@ -19,6 +19,7 @@ public class TestUserBL_normal {
 
     }
 
+
     @Test
     public void register() throws Exception {
         fail("not implemented yet!");
@@ -29,13 +30,18 @@ public class TestUserBL_normal {
     }
 
     @Test
-    public void unregister() throws Exception {
+    public void register_alreadyLoggedInThrows() throws Exception {
         fail("not implemented yet!");
     }
-    @Test
-    public void unregister_notRegisteredBefore() throws Exception {
-        fail("not implemented yet!");
-    }
+
+//    @Test
+//    public void unregister() throws Exception {
+//        fail("not implemented yet!");
+//    }
+//    @Test
+//    public void unregister_notLoggedIn() throws Exception {
+//        fail("not implemented yet!");
+//    }
 
     @Test
     public void login() throws Exception {
@@ -57,6 +63,11 @@ public class TestUserBL_normal {
     public void logout() throws Exception {
         fail("not implemented yet!");
     }
+    @Test
+    public void logout_notLoggedIn() throws Exception {
+        fail("not implemented yet!");
+    }
+
 
     @Test
     public void updateStatus() throws Exception {

@@ -3,7 +3,7 @@ package org.me.server.controller;
 
 import org.me.server.model.bl_old.UserBL;
 import org.me.server.model.bl_old.UserIX;
-import org.me.server.model.databases.Database;
+import org.me.server.model.databases_old.Database;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

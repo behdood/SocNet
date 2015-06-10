@@ -1,7 +1,7 @@
 package org.me.server.model.bl;
 
 
-import org.me.server.model.Id;
+import org.me.server.model.dto.Id;
 import org.me.server.model.dto.Feed;
 import org.me.server.model.dto.User;
 
@@ -86,6 +86,35 @@ public class UserBL implements UserIX {
     @Override
     public List<Feed> getOtherUserPublicFeeds() {
         return null;
+    }
+
+    public String getCommandsList(boolean isLoggedIn) {
+        String s = "";
+
+        String LINE_SEPARATOR = "\n";
+        String INDENT = "    ";
+
+        if (isLoggedIn) {
+            s += INDENT + "logout" + LINE_SEPARATOR;
+            s += INDENT + "delete_account" + LINE_SEPARATOR;
+            s += INDENT + "create_status <text>" + LINE_SEPARATOR;
+            s += INDENT + "create_public_status <text>" + LINE_SEPARATOR;
+            s += INDENT + "modify_status <status_id>" + LINE_SEPARATOR;
+            s += INDENT + "delete_status <status_id>" + LINE_SEPARATOR;
+            s += INDENT + "like_status <status_id>" + LINE_SEPARATOR;
+            s += INDENT + "unlike_status <status_id>" + LINE_SEPARATOR;
+            s += INDENT + "follow_user <username>" + LINE_SEPARATOR;
+            s += INDENT + "unfollow_user <username>" + LINE_SEPARATOR;
+            s += INDENT + "get_all_users" + LINE_SEPARATOR;
+            s += INDENT + "get_all_feeds" + LINE_SEPARATOR;
+            s += INDENT + "i_follow" + LINE_SEPARATOR;
+            s += INDENT + "follows_me" + LINE_SEPARATOR;
+            s += INDENT + "get_public_feeds <username>" + LINE_SEPARATOR;
+        } else {
+            s += INDENT + "create_account <username> <password>" + LINE_SEPARATOR;
+            s += INDENT + "login <username> <password>" + LINE_SEPARATOR;
+        }
+        return s;
     }
 
 }

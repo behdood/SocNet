@@ -1,106 +1,105 @@
 package org.me.server.model.dao;
 
 
-import org.me.server.model.Id;
+import org.me.server.model.Exceptions.FeedNotExistException;
+import org.me.server.model.Exceptions.NoPrivilegeException;
+import org.me.server.model.dto.Id;
 import org.me.server.model.dto.Feed;
-import org.me.server.model.dto.Privacy;
 import org.me.server.model.dto.User;
 
 import java.util.List;
 
 public class DatabaseUserDao implements UserDao {
     @Override
-    public boolean createUser(String username, String password) {
+    public void createUser(User newUser) {
 
     }
 
     @Override
-    public boolean deleteUser(Id userId) {
+    public void deleteUser(Id userId) {
 
     }
 
     @Override
-    public Id signInUser(String username, String password) {
-
+    public Id signInUser(User user) {
+        return null;
     }
 
     @Override
-    public boolean signOutUser(Id userId) {
-
-    }
-
-    @Override
-    public boolean isUserExist(Id userId) {
+    public boolean existUser(String username) {
         return false;
     }
 
     @Override
-    public Id getUserId(User user) {
-        return null;
-    }
-
-    @Override
-    public boolean isFeedExist(Id feedId) {
+    public boolean existUser(User user) {
         return false;
     }
 
     @Override
-    public Id getFeedId(Feed feed) {
+    public boolean existUser(Id userId) {
+        return false;
+    }
+
+//    @Override
+//    public void signOutUser(Id userId) {}
+
+    @Override
+    public Id addFeed(Id ownerId, Feed newFeed) {
         return null;
     }
 
     @Override
-    public void addFeed(Id userId, Feed feed, Privacy privacy) {
+    public void removeFeed(Id userId, Id feedId) throws FeedNotExistException, NoPrivilegeException {
 
     }
 
     @Override
-    public void removeFeed(Id userId, Feed feed) {
+    public void likeFeed(Id userId, Id feedId) {
 
     }
 
     @Override
-    public void likeFeed(Id userId, Feed feed) {
+    public void unlikeFeed(Id userId, Id feedId) {
 
     }
 
     @Override
-    public void unlikeFeed(Id userId, Feed feed) {
+    public void followOtherUser(Id userId, String otherUsername) {
 
     }
 
     @Override
-    public void followOtherUser(Id userId, Id otherUserId) {
+    public void unfollowOtherUser(Id userId, String otherUsername) {
 
     }
 
     @Override
-    public void unfollowOtherUser(Id userId, Id otherUserId) {
-
-    }
-
-    @Override
-    public List<User> getAllUsers(Id userId) {
+    public List<String> getAllUsers() {
         return null;
     }
 
     @Override
-    public List<User> getUsersFollowedByMe(Id userId) {
+    public List<String> getUsersFollowedByMe(Id userId) {
         return null;
     }
 
     @Override
-    public List<User> getFeedLikers(Id userId, Id StatusId) {
+    public Feed getFeed(Id feedId) throws FeedNotExistException {
         return null;
     }
 
     @Override
-    public List<Feed> getAllFeeds(Id userId) {
+    public List<String> getFeedLikers(Id feedId) {
         return null;
     }
 
     @Override
-    public List<Feed> getOtherUserPublicFeeds(Id otherUserId) {
+    public List<Id> getFeedIdsFromUsersFollowedByMe(Id userId) {
+        return null;
+    }
+
+    @Override
+    public List<Feed> getOtherUserPublicFeeds(String otherUsername) {
         return null;
     }
 }

@@ -3,15 +3,15 @@ package org.me.server.model;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.me.server.model.bl.TestUserBL_normal;
-import org.me.server.model.bl.TestUserBL_NotLogged;
-import org.me.server.model.dao.TestLocalStorageUserDao;
+import org.me.server.model.dao.TestLocalStorageUserDao_SignedInUserOperations;
+import org.me.server.model.dao.TestLocalStorageUserDao_BasicOperations;
 
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        TestLocalStorageUserDao.class,
+        TestLocalStorageUserDao_BasicOperations.class,
+        TestLocalStorageUserDao_SignedInUserOperations.class,
         TestUserBL_normal.class,
-        TestUserBL_NotLogged.class
 })
 
 public class LocalStorageAllTestsSuite {

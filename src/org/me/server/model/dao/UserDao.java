@@ -1,38 +1,59 @@
 package org.me.server.model.dao;
 
 
-import org.me.server.model.Id;
-import org.me.server.model.bl.UserActionResult;
+import org.me.server.model.Exceptions.*;
+import org.me.server.model.dto.Id;
 import org.me.server.model.dto.Feed;
-import org.me.server.model.dto.Privacy;
 import org.me.server.model.dto.User;
 
 import java.util.List;
 
 public interface UserDao {
-    boolean createUser(String username, String password);
-    boolean deleteUser(Id userId);
-    Id signInUser(String username, String password);
-    boolean signOutUser(Id userId);
-    boolean isUserExist(Id userId);
-    Id getUserId(User user);
-    boolean isFeedExist(Id feedId);
-    Id getFeedId(Feed feed);
 
-    void addFeed(Id userId, Feed feed, Privacy privacy);
-    void removeFeed(Id userId, Feed feed);
+    void createUser(User newUser)
+            throws UsernameAlreadyExistsException;
+    void deleteUser(Id userId)
+            throws UserDoesNotExistException;
+    Id signInUser(User user)
+            throws UserDoesNotExistException, IncorrectPasswordException;
 
-    void likeFeed(Id userId, Feed feed);
-    void unlikeFeed(Id userId, Feed feed);
+    boolean existUser(String username);
+    boolean existUser(User user);
+    boolean existUser(Id userId);
 
-    void followOtherUser(Id userId, Id otherUserId);
-    void unfollowOtherUser(Id userId, Id otherUserId);
 
-    List<User> getAllUsers(Id userId);
-    List<User> getUsersFollowedByMe(Id userId);
-    List<User> getFeedLikers(Id userId, Id StatusId);
+//    void createUser(String username, String password);
+//    Id signInUser(String username, String password);
+//    void signOutUser(Id userId)
+//        throws UserDoesNotExistException;
 
-    List<Feed> getAllFeeds(Id userId);
-    List<Feed> getOtherUserPublicFeeds(Id otherUserId);
+//    boolean isUserExist(Id userId);
+//    Id getUserId(User user);
+//    boolean isFeedExist(Id feedId);
+//    Id getFeedId(Feed feed);
+
+    // returns feed id
+    Id addFeed(Id ownerId, Feed newFeed);
+    void removeFeed(Id userId, Id feedId)
+            throws FeedNotExistException, NoPrivilegeException;
+
+    void likeFeed(Id userId, Id feedId)
+            throws FeedNotExistException, AlreadyLikedException;
+    void unlikeFeed(Id userId, Id feedId)
+            throws FeedNotExistException, NotLikedBeforeException;
+
+    void followOtherUser(Id userId, String otherUsername)
+            throws UserDoesNotExistException, AlreadyFollowingException;
+    void unfollowOtherUser(Id userId, String otherUsername)
+            throws UserDoesNotExistException, NotFollowedBeforeException;
+
+    List<String> getAllUsers();
+    List<String> getUsersFollowedByMe(Id userId);
+
+    Feed getFeed(Id feedId) throws FeedNotExistException;
+    List<String> getFeedLikers(Id feedId) throws FeedNotExistException;
+    List<Id> getFeedIdsFromUsersFollowedByMe(Id userId);
+
+    List<Feed> getOtherUserPublicFeeds(String otherUsername) throws UserDoesNotExistException;
 
 }

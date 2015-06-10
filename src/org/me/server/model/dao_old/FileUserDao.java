@@ -1,8 +1,8 @@
 package org.me.server.model.dao_old;
 
-import org.me.server.model.databases.Database;
+import org.me.server.model.databases_old.Database;
 import org.me.server.model.Exceptions.*;
-import org.me.server.model.databases.FileDatabase;
+import org.me.server.model.databases_old.FileDatabase;
 import org.me.server.model.dto_old.*;
 
 import java.util.Collections;
@@ -32,9 +32,9 @@ public class FileUserDao implements UserDao {
 
     @Override
     public void signIn(String username, String password)
-            throws UsernameDoesNotExistException, IncorrectPasswordException {
+            throws UserDoesNotExistException, IncorrectPasswordException {
         if (!db.allUsers.containsKey(username))
-            throw new UsernameDoesNotExistException();
+            throw new UserDoesNotExistException();
 
         User user = db.allUsers.get(username);
         if (!user.getPassword().equals(password))
@@ -56,24 +56,24 @@ public class FileUserDao implements UserDao {
 
     @Override
     public void deletePost(String user, String post_id)
-            throws NotSignedInException, PostDoesNotExistException {
+            throws NotSignedInException, FeedNotExistException {
         if (!db.allUsers.containsKey(user))
             throw new NotSignedInException();
 
         if (!db.allPosts.containsKey(post_id))
-            throw new PostDoesNotExistException();
+            throw new FeedNotExistException();
 
         db.allPosts.remove(post_id);
     }
 
     @Override
     public void insertLike(String user, String post_id)
-            throws NotSignedInException, PostDoesNotExistException, AlreadyLikedException {
+            throws NotSignedInException, FeedNotExistException, AlreadyLikedException {
         if (!db.allUsers.containsKey(user))
             throw new NotSignedInException();
 
         if (!db.allPosts.containsKey(post_id))
-            throw new PostDoesNotExistException();
+            throw new FeedNotExistException();
 
         Vector <String> currentLikers = db.postLikerMap.get(post_id);
         if (currentLikers.contains(user))
@@ -84,12 +84,12 @@ public class FileUserDao implements UserDao {
 
     @Override
     public void deleteLike(String user, String post_id)
-            throws NotSignedInException, PostDoesNotExistException, NotLikedBeforeException {
+            throws NotSignedInException, FeedNotExistException, NotLikedBeforeException {
         if (!db.allUsers.containsKey(user))
             throw new NotSignedInException();
 
         if (!db.allPosts.containsKey(post_id))
-            throw new PostDoesNotExistException();
+            throw new FeedNotExistException();
 
         Vector <String> currentLikers = db.postLikerMap.get(post_id);
         if (!currentLikers.contains(user))
@@ -101,11 +101,11 @@ public class FileUserDao implements UserDao {
 
     @Override
     public void insertFollow(String user, String other)
-            throws NotSignedInException, AlreadyFollowingException, UsernameDoesNotExistException {
+            throws NotSignedInException, AlreadyFollowingException, UserDoesNotExistException {
         if (!db.allUsers.containsKey(user))
             throw new NotSignedInException();
         if (!db.allUsers.containsKey(other))
-            throw new UsernameDoesNotExistException(other);
+            throw new UserDoesNotExistException(other);
 
         Vector<String> currentlyFollowing = db.followerMap.get(user);
         if (currentlyFollowing.contains(other))
@@ -117,15 +117,15 @@ public class FileUserDao implements UserDao {
 
     @Override
     public void deleteFollow(String user, String other)
-            throws NotSignedInException, NotFollowingException, UsernameDoesNotExistException {
+            throws NotSignedInException, NotFollowedBeforeException, UserDoesNotExistException {
         if (!db.allUsers.containsKey(user))
             throw new NotSignedInException();
         if (!db.allUsers.containsKey(other))
-            throw new UsernameDoesNotExistException(other);
+            throw new UserDoesNotExistException(other);
 
         Vector<String> currentlyFollowing = db.followerMap.get(user);
         if (!currentlyFollowing.contains(other))
-            throw new NotFollowingException(user, other);
+            throw new NotFollowedBeforeException(user, other);
 
         currentlyFollowing.remove(other);
         db.followerMap.put(user, currentlyFollowing);
@@ -171,13 +171,13 @@ public class FileUserDao implements UserDao {
     }
 
     @Override
-    public Iterator<String> selectPostLikers(String user, String post_id) throws NotSignedInException, PostDoesNotExistException {
+    public Iterator<String> selectPostLikers(String user, String post_id) throws NotSignedInException, FeedNotExistException {
         if (!db.allUsers.containsKey(user))
             throw new NotSignedInException();
         if (!db.followerMap.containsKey(user))
             throw new NotSignedInException();
         if (!db.allPosts.containsKey(post_id))
-            throw new PostDoesNotExistException();
+            throw new FeedNotExistException();
 
 //        Feed post = db.allPosts.get(post_id);
 //        return db.postLikerMap.get(db.allPosts.get(post_id).getPost_id()).iterator();
@@ -187,9 +187,9 @@ public class FileUserDao implements UserDao {
     }
 
     @Override
-    public Iterator<String> selectPublicPosts(String other) throws UsernameDoesNotExistException {
+    public Iterator<String> selectPublicPosts(String other) throws UserDoesNotExistException {
         if (!db.allUsers.containsKey(other))
-            throw new UsernameDoesNotExistException(other);
+            throw new UserDoesNotExistException(other);
 
         Vector<String> followedFeeds = new Vector<>();
         for (Feed feed : db.allPosts.values()) {

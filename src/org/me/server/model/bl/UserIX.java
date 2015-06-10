@@ -1,7 +1,7 @@
 package org.me.server.model.bl;
 
 
-import org.me.server.model.Id;
+import org.me.server.model.dto.Id;
 import org.me.server.model.dto.Feed;
 import org.me.server.model.dto.User;
 
