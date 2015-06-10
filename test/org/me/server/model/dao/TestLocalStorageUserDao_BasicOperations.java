@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.me.server.model.Exceptions.IncorrectPasswordException;
 import org.me.server.model.Exceptions.UsernameAlreadyExistsException;
 import org.me.server.model.Exceptions.UserDoesNotExistException;
-import org.me.server.model.databases_new.LocalDatabaseHandler;
+import org.me.server.model.databases.local.LocalDatabaseHandler;
 import org.me.server.model.dto.Id;
 import org.me.server.model.dto.User;
 

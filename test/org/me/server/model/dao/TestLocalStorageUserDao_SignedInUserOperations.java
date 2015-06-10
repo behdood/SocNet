@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.me.server.model.Exceptions.*;
-import org.me.server.model.databases_new.LocalDatabaseHandler;
+import org.me.server.model.databases.local.LocalDatabaseHandler;
 import org.me.server.model.dto.Feed;
 import org.me.server.model.dto.Privacy;
 import org.me.server.model.dto.User;

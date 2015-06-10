@@ -1,7 +1,7 @@
 package org.me.server.model.dao;
 
 import org.me.server.model.Exceptions.*;
-import org.me.server.model.databases_new.LocalDatabaseHandler;
+import org.me.server.model.databases.local.LocalDatabaseHandler;
 import org.me.server.model.dto.*;
 
 import java.util.ArrayList;
